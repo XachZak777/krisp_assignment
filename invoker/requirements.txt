@@ -1,4 +1,4 @@
-Flask==2.3.3
+Flask
 redis
-aiohttp==3.8.5
-requests==2.31.0
+aiohttp
+requests
