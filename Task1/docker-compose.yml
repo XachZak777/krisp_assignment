@@ -1,10 +1,20 @@
-version: '3.7'
+version: '3'
 services:
-  app:
-    build: .
+  generator:
+    build: ./generator
     ports:
-      - "8000:8000"
+      - "8084:5000"  # Expose port 5000 in the container to 8084 on the host
+
+  invoker:
+    build: ./invoker
+    ports:
+      - "8085:5001"  # Expose port 5001 in the container to 8085 on the host
     depends_on:
-      - redis
+      - generator
+    environment:
+      - GENERATOR_URL=http://generator:5000  # Use internal Docker network to access Generator service
+
   redis:
-    image: redis:latest
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"  # Redis default port
